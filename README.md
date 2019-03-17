@@ -1,13 +1,15 @@
-## Welcome to GitHub Pages
+## NextCloud搭建测试
 
-This case describe the way I install the NextCloud.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+首先按照官方文档先把依赖加上。
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+```shell
+sudo apt-get install apache2 mariadb-server libapache2-mod-php7.2
+sudo apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring
+sudo apt-get install php7.2-intl php-imagick php7.2-xml php7.2-zip
+```
+官方是没有sudo的，但会导致锁文件打不开权限不够的问题。
+Apache是一个web服务器网页端服务，
 ```markdown
 Syntax highlighted code block
 
