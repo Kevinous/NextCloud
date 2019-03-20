@@ -192,7 +192,9 @@ sudo vi proxy
 ###end of content
 ln -s proxy ../sites-enabled/proxy
 ```
-_这里的proxy_set_header Host是必须的，否则会出现不信任问题————trusted_domin相关，加上这一句header后即可解决_
+_这里的proxy_set_header Host是必须的，否则会出现不信任问题———因为发给真实服务器的http请求的HOST字段还是反向代理服务器的HOST，因此没有经过设置trusted_domin会被拒绝，加上这一句header后即可解决_
+
+-------
 
 #### proxy_set_header
 Host的含义是表明请求的主机名，因为nginx作为反向代理使用，而如果后端真是的服务器设置有类似防盗链或者根据http请求头中的host字段来进行路由或判断功能的话，如果反向代理层的nginx不重写请求头中的host字段，将会导致请求失败【默认反向代理服务器会向后端真实服务器发送请求，并且请求头中的host字段应为proxy_pass指令设置的服务器】。
