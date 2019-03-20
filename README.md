@@ -109,4 +109,60 @@ MariaDB [(none)]> \q
 用户地址可以是localhost，也可以是ip地址、机器名字、域名。也可以用’%'表示从任何地址连接。
 ‘连接口令’不能为空，否则创建失败。
 
-### 目前使用Apacha成功运行了Nextcloud，接下来到nginx部分
+#### 目前使用Apacha成功运行了Nextcloud，接下来到nginx部分
+
+### Nginx
+
+首先安装nginx并设置自启动
+
+```shell
+sudo apt install nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+
+(可以使用`systemctl status nginx`查看状态）
+
+并且因为需要使用php扩展来支持并且优化php，我们也需要开启php-fpm
+
+```shell
+sudo apt install php-fpm
+sudo systemctl enable php-fpm
+sudo systemctl start php-fpm
+```
+
+同时因为现在开始使用nginx代理，我们将之前的Apache取消开机自启动
+
+```shell
+sudo systemctl disable apache2.service
+sudo systemctl stop apache2.service
+```
+
+
+接着创建一个Nginx Server Block
+
+```shell
+cd /etc/nginx/sites-available
+sudo vi nextcloud
+```
+接着将[此处](https://www.linuxbabe.com/ubuntu/install-nextcloud-ubuntu-18-04-nginx-lemp)的Step 3处代码复制进去
+
+然后进行软连接
+```shell
+ln -s ../sites-enabled/nextcloud nextcloud
+```
+
+接着测试一下语法是否有问题
+```shell
+sudo nginx -t
+```
+
+如果没有问题会反馈success，接下来让nginx重新加载
+
+```shell
+sudo systemctl reload nginx
+```
+此时使用http服务的部署在nginx上的nextcloud就完成了，此时还没有使用hsts以及reverse proxy
+
+
+
